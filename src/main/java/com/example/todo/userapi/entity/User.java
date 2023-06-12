@@ -1,6 +1,7 @@
 package com.example.todo.userapi.entity;
 
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -20,7 +21,7 @@ public class User {
 
     @Id
     @Column(name = "user_id")
-    @GeneratedValue(generator = "system-uuid") //나만의 generator사용 문자열 형태의 UUID를 사용하기 위해서 커스텀
+    @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid")
     private String id; // 계정명이 아니라 식별코드
 
@@ -35,4 +36,10 @@ public class User {
 
     @CreationTimestamp
     private LocalDateTime joinDate;
+
+
+    @Enumerated(EnumType.STRING)
+    @ColumnDefault("'COMMON'")
+    private Role role; // 유저 권한
+
 }
