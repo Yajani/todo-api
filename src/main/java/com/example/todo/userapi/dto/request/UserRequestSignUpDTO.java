@@ -17,7 +17,7 @@ import javax.validation.constraints.Size;
 public class UserRequestSignUpDTO {
 
     @NotBlank
-    @Email //이메일 패턴 검증
+    @Email
     private String email;
 
     @NotBlank
@@ -30,10 +30,10 @@ public class UserRequestSignUpDTO {
 
     // 엔터티로 변경하는 메서드
     public User toEntity() {
-        User user = new User();
-        user.setUserName(this.userName);
-        user.setPassword(this.password);
-        user.setEmail(this.email);
-        return user;
+        return User.builder()
+                .userName(this.userName)
+                .password(this.password)
+                .email(this.email)
+                .build();
     }
 }

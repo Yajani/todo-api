@@ -39,7 +39,7 @@ public class TodoService {
     public TodoListResponseDTO create(final TodoCreateRequestDTO createRequestDTO)
             throws RuntimeException
     {
-        todoRepository.save(createRequestDTO.toEntity());
+        todoRepository.save(createRequestDTO.toEntity()); //save를 할때 entity를 전체 다 넣어줘야한다
         log.info("할 일이 저장되었습니다. 제목 : {}", createRequestDTO.getTitle());
         return retrieve();
     }
