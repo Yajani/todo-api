@@ -23,7 +23,7 @@ class UserServiceTest {
             " RuntimeException이 발생해야 한다.")
     void validateEmailTest() {
         //given
-        String email = "abc1234@abc.com";
+        String email = "aaa1234@abc.com";
 
         UserRequestSignUpDTO dto
                 = UserRequestSignUpDTO.builder()
