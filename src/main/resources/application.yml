@@ -39,4 +39,12 @@ jwt:
 
 # 업로드파일 저장 경로
 upload:
-  path: /Users/choyejin
+  path: /Users/choyejin/todo-upload
+
+#s3 접근 설정
+aws:
+  credentials:
+    accessKey: AKIAWFGAQ3PXANPDGGMT #복사해서 받은 키 붙여넣기
+    secretKey: 2eJm4HpRHYxXkvuOuTQdqdi8asyUgdO2vQScUKb1
+  region: ap-northeast-2
+  bucketName: file-upload-bucket9984

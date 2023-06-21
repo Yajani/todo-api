@@ -1,5 +1,6 @@
 package com.example.todo.userapi.api;
 
+import antlr.Token;
 import com.example.todo.auth.TokenUserInfo;
 import com.example.todo.exception.DuplicatedEmailException;
 import com.example.todo.exception.NoRegisteredArgumentsException;
@@ -23,7 +24,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
-
 
 
 @RestController
@@ -59,7 +59,6 @@ public class UserController {
         log.info("/api/auth POST! - {}", dto);
 
 
-
         if (result.hasErrors()) {
             log.warn(result.toString());
             return ResponseEntity.badRequest()
@@ -69,7 +68,7 @@ public class UserController {
         try {
 
             String uploadedFilePath = null;
-            if(profileImg != null) {
+            if (profileImg != null) {
                 log.info("attached file name: {}", profileImg.getOriginalFilename());
                 uploadedFilePath = userService.uploadProfileImage(profileImg);
             }
@@ -112,7 +111,6 @@ public class UserController {
                     .badRequest()
                     .body(e.getMessage());
         }
-
 
 
     }
@@ -194,7 +192,8 @@ public class UserController {
                 = filePath.substring(filePath.lastIndexOf(".") + 1);
 
         switch (ext.toUpperCase()) {
-            case "JPG": case "JPEG":
+            case "JPG":
+            case "JPEG":
                 return MediaType.IMAGE_JPEG;
             case "PNG":
                 return MediaType.IMAGE_PNG;
@@ -204,6 +203,22 @@ public class UserController {
                 return null;
         }
 
+    }
+
+    //s3에서 불러온 프로필 사진 처리
+    @GetMapping("/load-s3")
+    public ResponseEntity<?> loads3(
+            @AuthenticationPrincipal TokenUserInfo userInfo
+    ) {
+        log.info("/api/auth/load-s3 GET - user: {}", userInfo);
+        try {
+            String profilePath = userService.getProfilePath(userInfo.getUserId());
+            return ResponseEntity.ok().body(profilePath);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.badRequest().body(e.getMessage());
+
+        }
     }
 
 
